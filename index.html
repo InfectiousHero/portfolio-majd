@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Majd Al Khori - Portfolio</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f5f0;
+      color: #1a1a1a;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #f8f5f0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: #1a1a1a;
+    }
+
+    .navbar-brand span {
+      color: #1a6b3a;
+    }
+
+    .nav-link {
+      color: #666 !important;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-link:hover {
+      color: #1a6b3a !important;
+    }
+
+    /* Hero section */
+    .hero-section {
+      padding: 100px 0 80px;
+      background-color: #f8f5f0;
+    }
+
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero-section h1 span {
+      color: #1a6b3a;
+      font-style: italic;
+    }
+
+    .hero-section p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    .btn-green {
+      background-color: #1a6b3a;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 0;
+      text-decoration: none;
+    }
+
+    .btn-green:hover {
+      background-color: #14532d;
+      color: white;
+    }
+
+    .btn-outline-dark-custom {
+      background-color: transparent;
+      color: #1a1a1a;
+      border: 1px solid #ccc;
+      padding: 12px 30px;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 0;
+      text-decoration: none;
+    }
+
+    .btn-outline-dark-custom:hover {
+      background-color: #1a1a1a;
+      color: white;
+    }
+
+    /* About section */
+    #about {
+      padding: 80px 0;
+      background-color: #f8f5f0;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .section-title span {
+      color: #1a6b3a;
+      font-style: italic;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #999;
+      margin-bottom: 15px;
+    }
+
+    .interest-card {
+      background-color: #ede7d6;
+      border-left: 3px solid #1a6b3a;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .interest-card:hover {
+      border-left-color: #c9a84c;
+    }
+
+    .interest-card i {
+      font-size: 1.4rem;
+      color: #1a6b3a;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .interest-card h5 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .interest-card p {
+      font-size: 0.85rem;
+      color: #666;
+      margin: 0;
+    }
+
+    .skill-badge {
+      display: inline-block;
+      border: 1px solid #ccc;
+      padding: 5px 14px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: #666;
+      margin: 3px;
+    }
+
+    .skill-badge:hover {
+      border-color: #1a6b3a;
+      color: #1a6b3a;
+    }
+
+    /* Process section */
+    #work {
+      padding: 80px 0;
+      background-color: #ede7d6;
+    }
+
+    .process-item {
+      display: flex;
+      gap: 20px;
+      padding: 25px 0;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .process-item:last-child {
+      border-bottom: none;
+    }
+
+    .process-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ccc;
+      min-width: 40px;
+    }
+
+    .process-item:hover .process-num {
+      color: #1a6b3a;
+    }
+
+    .process-item h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .process-item p {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 0;
+    }
+
+    .resource-link {
+      display: block;
+      color: #666;
+      font-size: 0.9rem;
+      padding: 5px 0;
+      text-decoration: none;
+    }
+
+    .resource-link:hover {
+      color: #1a6b3a;
+    }
+
+    /* Projects section */
+    #projects {
+      padding: 80px 0;
+      background-color: #f8f5f0;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      display: block;
+      text-decoration: none;
+      aspect-ratio: 4/3;
+    }
+
+    .project-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-bg i {
+      font-size: 3.5rem;
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    .bg-1 { background: linear-gradient(135deg, #14532d, #1a6b3a); }
+    .bg-2 { background: linear-gradient(135deg, #1a1a1a, #4a3000); }
+    .bg-3 { background: linear-gradient(135deg, #0f3f6e, #1a6b3a); }
+    .bg-4 { background: linear-gradient(135deg, #2c2c2c, #14532d); }
+
+    .project-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      padding: 20px;
+    }
+
+    .project-num {
+      font-size: 0.72rem;
+      color: #c9a84c;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: white;
+      margin-bottom: 3px;
+    }
+
+    .project-type {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+    }
+
+    .coming-soon-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: #1a6b3a;
+      color: white;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1a1a1a;
+      color: #f8f5f0;
+      padding: 50px 0 25px;
+    }
+
+    footer h3 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    footer h3 span {
+      color: #1a6b3a;
+    }
+
+    .footer-sub {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.9rem;
+      text-decoration: none;
+      margin-right: 20px;
+    }
+
+    .footer-links a:hover {
+      color: #c9a84c;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 30px;
+      padding-top: 20px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Majd<span>.</span>Al Khori</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav gap-2">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#work">Process</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Work</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <p class="section-label">UI/UX Designer & Developer — uOttawa SEG3125</p>
+          <h1>Designing<br /><span>Interfaces</span><br />With Purpose.</h1>
+          <p>Computer Science student at the University of Ottawa — driven by faith, fuelled by football, and focused on building digital experiences that truly connect with people.</p>
+
+          <!-- Passion pills -->
+          <div class="mb-4 d-flex flex-wrap gap-2">
+            <span class="border rounded-pill px-3 py-1" style="font-size:0.8rem; color:#666;">
+              <i class="bi bi-dribbble" style="color:#1a6b3a;"></i> Football
+            </span>
+            <span class="border rounded-pill px-3 py-1" style="font-size:0.8rem; color:#666;">
+              <i class="bi bi-circle" style="color:#1a6b3a;"></i> Billiards
+            </span>
+            <span class="border rounded-pill px-3 py-1" style="font-size:0.8rem; color:#666;">
+              <i class="bi bi-book" style="color:#1a6b3a;"></i> Christianity
+            </span>
+            <span class="border rounded-pill px-3 py-1" style="font-size:0.8rem; color:#666;">
+              <i class="bi bi-laptop" style="color:#1a6b3a;"></i> UI/UX Design
+            </span>
+          </div>
+
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="#projects" class="btn-green">View Work</a>
+            <a href="#about" class="btn-outline-dark-custom">About Me</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="m-0" style="border-color:#ddd;" />
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- Left: bio -->
+        <div class="col-lg-6">
+          <p class="section-label">01 — About</p>
+          <h2 class="section-title">Hello, I'm<br /><span>Majd Al Khori.</span></h2>
+          <p>I'm a Computer Science student at the University of Ottawa with a genuine interest in how people interact with technology — and how good design can make those interactions feel simple and natural.</p>
+          <p>Off-screen you'll find me on the football pitch — playing or watching. The team strategy and quick decision-making in football actually influence how I think about design: clarity under pressure and always reading the situation. I also enjoy the calm focus of billiards, where every angle matters.</p>
+          <p>My faith as a Christian shapes how I see the world. I believe in building things that are honest, purposeful, and human — and that same principle guides my approach to design.</p>
+        </div>
+
+        <!-- Right: interests + skills -->
+        <div class="col-lg-5 offset-lg-1">
+
+          <!-- Interest cards -->
+          <div class="interest-card">
+            <i class="bi bi-dribbble-fill"></i>
+            <h5>Football</h5>
+            <p>Playing and watching — the strategy, teamwork, and passion behind the beautiful game.</p>
+          </div>
+
+          <div class="interest-card">
+            <i class="bi bi-circle-fill"></i>
+            <h5>Billiards</h5>
+            <p>Precision, patience, and geometry — every shot is a problem with one correct solution.</p>
+          </div>
+
+          <div class="interest-card">
+            <i class="bi bi-book-fill"></i>
+            <h5>Christianity</h5>
+            <p>A source of grounding and purpose — exploring scripture shapes how I think about meaning.</p>
+          </div>
+
+          <!-- Skills -->
+          <div class="mt-4">
+            <p class="section-label">Currently Learning</p>
+            <span class="skill-badge">HTML5</span>
+            <span class="skill-badge">CSS3</span>
+            <span class="skill-badge">JavaScript</span>
+            <span class="skill-badge">Bootstrap 5</span>
+            <span class="skill-badge">UX Principles</span>
+            <span class="skill-badge">Visual Communication</span>
+            <span class="skill-badge">User-Centered Design</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="m-0" style="border-color:#ddd;" />
+
+  <!-- How I Work -->
+  <section id="work">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- Left: description + links -->
+        <div class="col-lg-5">
+          <p class="section-label">02 — Process</p>
+          <h2 class="section-title">How I<br /><span>Work.</span></h2>
+          <p style="color:#666; font-size:0.95rem;">As a student in SEG3125 at the University of Ottawa, I'm actively building my design process. Like football — where reading the game matters as much as the technique — good design starts with understanding the situation first.</p>
+
+          <div class="mt-4">
+            <p class="section-label">Resources</p>
+            <a href="https://www.nngroup.com/" class="resource-link" target="_blank">
+              <i class="bi bi-box-arrow-up-right me-2"></i>Nielsen Norman Group (NN/g)
+            </a>
+            <a href="https://www.interaction-design.org/" class="resource-link" target="_blank">
+              <i class="bi bi-box-arrow-up-right me-2"></i>Interaction Design Foundation
+            </a>
+            <a href="https://www.w3schools.com/bootstrap5/index.php" class="resource-link" target="_blank">
+              <i class="bi bi-box-arrow-up-right me-2"></i>Bootstrap 5 — W3Schools
+            </a>
+            <a href="https://uottawa.ca" class="resource-link" target="_blank">
+              <i class="bi bi-box-arrow-up-right me-2"></i>SEG3125 — University of Ottawa
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: steps -->
+        <div class="col-lg-6 offset-lg-1">
+          <div class="process-item">
+            <div class="process-num">01</div>
+            <div>
+              <h4>Understand & Research</h4>
+              <p>Like studying a team before a match — I start by understanding user needs and goals before touching any design element.</p>
+            </div>
+          </div>
+          <div class="process-item">
+            <div class="process-num">02</div>
+            <div>
+              <h4>Define & Ideate</h4>
+              <p>Translating research into clear problems. I sketch multiple directions before committing — like planning plays before choosing one.</p>
+            </div>
+          </div>
+          <div class="process-item">
+            <div class="process-num">03</div>
+            <div>
+              <h4>Prototype & Build</h4>
+              <p>From wireframes to HTML/CSS/JS with Bootstrap 5. Good design must be buildable, so I test real interactions early.</p>
+            </div>
+          </div>
+          <div class="process-item">
+            <div class="process-num">04</div>
+            <div>
+              <h4>Evaluate & Iterate</h4>
+              <p>Using heuristic evaluation and peer feedback to improve. Every good result — in design or in sport — comes from honest review.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="m-0" style="border-color:#ddd;" />
+
+  <!-- Case Studies -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label">03 — Case Studies</p>
+      <div class="row align-items-end mb-4">
+        <div class="col-lg-6">
+          <h2 class="section-title">Selected<br /><span>Work.</span></h2>
+        </div>
+        <div class="col-lg-5 offset-lg-1">
+          <p style="color:#666; font-size:0.9rem;">Four design projects developed throughout SEG3125. Each explores a different design challenge — all coming soon.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+
+        <div class="col-md-6">
+          <a href="coming-soon/design1.html" class="project-card">
+            <div class="project-bg bg-1">
+              <i class="bi bi-scissors"></i>
+            </div>
+            <div class="coming-soon-tag">Coming Soon</div>
+            <div class="project-overlay">
+              <div class="project-num">Case Study 01</div>
+              <div class="project-title">Service Website</div>
+              <div class="project-type">Dentist / Bike Repair / Hairdresser</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6">
+          <a href="coming-soon/design2.html" class="project-card">
+            <div class="project-bg bg-2">
+              <i class="bi bi-grid-3x3-gap"></i>
+            </div>
+            <div class="coming-soon-tag">Coming Soon</div>
+            <div class="project-overlay">
+              <div class="project-num">Case Study 02</div>
+              <div class="project-title">Memory Game</div>
+              <div class="project-type">Jeu de Mémoire — Interactive UI</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6">
+          <a href="coming-soon/design3.html" class="project-card">
+            <div class="project-bg bg-3">
+              <i class="bi bi-bag-heart"></i>
+            </div>
+            <div class="coming-soon-tag">Coming Soon</div>
+            <div class="project-overlay">
+              <div class="project-num">Case Study 03</div>
+              <div class="project-title">E-Commerce Site</div>
+              <div class="project-type">Online Shop — Full UI Design</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6">
+          <a href="coming-soon/design4.html" class="project-card">
+            <div class="project-bg bg-4">
+              <i class="bi bi-bar-chart-line"></i>
+            </div>
+            <div class="coming-soon-tag">Coming Soon</div>
+            <div class="project-overlay">
+              <div class="project-num">Case Study 04</div>
+              <div class="project-title">Analytics Dashboard</div>
+              <div class="project-type">BI / Sports / Data Visualization</div>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="container">
+      <div class="row align-items-start">
+        <div class="col-lg-6">
+          <p style="font-size:0.75rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.1em;">Get in touch</p>
+          <h3>Majd<span>.</span>Al Khori</h3>
+          <p class="footer-sub">UI/UX Design Portfolio — SEG3125 · uOttawa · 300240467</p>
+        </div>
+        <div class="col-lg-5 offset-lg-1 mt-4 mt-lg-0">
+          <p style="color:rgba(255,255,255,0.45); font-size:0.95rem; margin-bottom:20px;">
+            Currently building this portfolio as part of SEG3125. Open to feedback and interesting conversations.
+          </p>
+          <div class="footer-links">
+            <a href="mailto:malkh123@uottawa.ca"><i class="bi bi-envelope me-1"></i>Email</a>
+            <a href="https://github.com/" target="_blank"><i class="bi bi-github me-1"></i>GitHub</a>
+            <a href="https://linkedin.com/" target="_blank"><i class="bi bi-linkedin me-1"></i>LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom d-flex justify-content-between flex-wrap gap-2">
+        <span>© 2026 Majd Al Khori — SEG3125, University of Ottawa</span>
+        <span>Built with Bootstrap 5 & HTML/CSS/JS</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Show elements when scrolling down the page
+    window.addEventListener('scroll', function() {
+      var elements = document.querySelectorAll('.interest-card, .process-item, .project-card');
+      for (var i = 0; i < elements.length; i++) {
+        var rect = elements[i].getBoundingClientRect();
+        if (rect.top < window.innerHeight - 60) {
+          elements[i].style.opacity = '1';
+          elements[i].style.transform = 'translateY(0)';
+        }
+      }
+    });
+
+    // Set initial state for animated elements
+    var animatedEls = document.querySelectorAll('.interest-card, .process-item, .project-card');
+    for (var i = 0; i < animatedEls.length; i++) {
+      animatedEls[i].style.opacity = '0';
+      animatedEls[i].style.transform = 'translateY(20px)';
+      animatedEls[i].style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    }
+
+    // Trigger scroll once on load
+    window.dispatchEvent(new Event('scroll'));
+  </script>
+
+</body>
+</html>
