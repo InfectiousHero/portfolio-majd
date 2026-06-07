@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrestigeCuts Barbershop</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f0e8;
+      color: #1a1a1a;
+      margin: 0;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* navbar */
+    .navbar {
+      background-color: #1a1a1a;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      color: #f5f0e8 !important;
+      font-size: 1.3rem;
+    }
+
+    .navbar-brand span {
+      color: #c9a84c;
+    }
+
+    .nav-link {
+      color: rgba(245,240,232,0.7) !important;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-link:hover {
+      color: #c9a84c !important;
+    }
+
+    /* hero */
+    .hero {
+      background-color: #1a1a1a;
+      color: #f5f0e8;
+      padding: 80px 0;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 span {
+      color: #c9a84c;
+      font-style: italic;
+    }
+
+    .hero p {
+      color: rgba(245,240,232,0.6);
+      font-size: 1rem;
+      margin-bottom: 25px;
+      max-width: 450px;
+    }
+
+    .btn-book {
+      background-color: #c9a84c;
+      color: #1a1a1a;
+      padding: 10px 28px;
+      border: none;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-book:hover {
+      background-color: #b8973d;
+      color: #1a1a1a;
+    }
+
+    /* sections */
+    section {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .section-title span {
+      color: #1a6b3a;
+      font-style: italic;
+    }
+
+    .section-sub {
+      color: #777;
+      font-size: 0.9rem;
+      margin-bottom: 35px;
+    }
+
+    /* service cards */
+    .service-card {
+      background-color: #ede7d6;
+      border-left: 4px solid #1a6b3a;
+      padding: 20px;
+      height: 100%;
+    }
+
+    .service-card:hover {
+      border-left-color: #c9a84c;
+    }
+
+    .service-card i {
+      font-size: 1.5rem;
+      color: #1a6b3a;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .service-card h5 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .service-card p {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    /* booking section */
+    #booking {
+      background-color: #1a1a1a;
+      color: #f5f0e8;
+    }
+
+    #booking .section-title span {
+      color: #c9a84c;
+    }
+
+    #booking .section-sub {
+      color: rgba(245,240,232,0.5);
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(245,240,232,0.5);
+    }
+
+    .form-control, .form-select {
+      background-color: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #f5f0e8;
+      border-radius: 0;
+    }
+
+    .form-control:focus, .form-select:focus {
+      background-color: rgba(255,255,255,0.1);
+      border-color: #c9a84c;
+      color: #f5f0e8;
+      box-shadow: none;
+    }
+
+    .form-control::placeholder {
+      color: rgba(245,240,232,0.25);
+    }
+
+    .form-select option {
+      background-color: #1a1a1a;
+    }
+
+    #confirmBox {
+      display: none;
+      background-color: rgba(26,107,58,0.2);
+      border: 1px solid #1a6b3a;
+      padding: 15px 18px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    #errorBox {
+      display: none;
+      background-color: rgba(200,0,0,0.15);
+      border: 1px solid rgba(200,0,0,0.4);
+      padding: 15px 18px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #f5f0e8;
+    }
+
+    /* about */
+    #about {
+      background-color: #ede7d6;
+    }
+
+    .stat-box {
+      background-color: #f5f0e8;
+      border-left: 3px solid #c9a84c;
+      padding: 15px 18px;
+      margin-bottom: 12px;
+    }
+
+    .stat-box .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .stat-box .lbl {
+      font-size: 0.75rem;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    /* contact */
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .contact-row i {
+      color: #1a6b3a;
+      font-size: 1.1rem;
+      margin-top: 2px;
+    }
+
+    .contact-row h6 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      margin-bottom: 2px;
+    }
+
+    .contact-row p {
+      margin: 0;
+      font-size: 0.92rem;
+    }
+
+    table.hours {
+      width: 100%;
+      font-size: 0.9rem;
+    }
+
+    table.hours td {
+      padding: 7px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.hours td:last-child {
+      text-align: right;
+      color: #1a6b3a;
+      font-weight: 500;
+    }
+
+    /* footer */
+    footer {
+      background-color: #1a1a1a;
+      color: #f5f0e8;
+      padding: 35px 0 20px;
+    }
+
+    footer h5 {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 4px;
+    }
+
+    footer h5 span {
+      color: #c9a84c;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 25px;
+      padding-top: 15px;
+      font-size: 0.72rem;
+      color: rgba(245,240,232,0.25);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Prestige<span>cuts</span></a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <i class="bi bi-list fs-4" style="color:#f5f0e8;"></i>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav gap-2">
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#booking">Book</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.15em; color:#c9a84c; margin-bottom:12px;">Ottawa's Local Barbershop</p>
+          <h1>Look Good,<br /><span>Feel Better.</span></h1>
+          <p>We're a small barbershop on Sparks Street. No fancy stuff — just good cuts, good barbers, and fair prices. Walk in or book ahead.</p>
+          <a href="#booking" class="btn-book">Book a Cut</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section id="services" style="background-color:#f5f0e8;">
+    <div class="container">
+      <h2 class="section-title">Our <span>Services</span></h2>
+      <p class="section-sub">Everything we offer. Walk-ins always welcome.</p>
+
+      <div class="row g-3">
+        <div class="col-sm-6 col-lg-3">
+          <div class="service-card">
+            <i class="bi bi-scissors"></i>
+            <h5>Classic Haircut</h5>
+            <p>A clean cut, your style. Includes wash and blow-dry.</p>
+            <div class="price">$35</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="service-card">
+            <i class="bi bi-align-bottom"></i>
+            <h5>Fade & Taper</h5>
+            <p>Low, mid, or high fade. Skin or scissor — your call.</p>
+            <div class="price">$40</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="service-card">
+            <i class="bi bi-person-fill"></i>
+            <h5>Beard Trim</h5>
+            <p>Shape up with a hot towel and straight razor finish.</p>
+            <div class="price">$25</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="service-card">
+            <i class="bi bi-stars"></i>
+            <h5>Cut + Beard</h5>
+            <p>Full haircut plus beard. Most popular combo we do.</p>
+            <div class="price">$55</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section id="booking">
+    <div class="container">
+      <div class="row g-5">
+
+        <div class="col-lg-4">
+          <h2 class="section-title">Book an <span>Appointment</span></h2>
+          <p class="section-sub">Fill in the form and we'll hold your spot. You'll get a confirmation once it's set.</p>
+          <p style="color:rgba(245,240,232,0.45); font-size:0.85rem;">
+            <strong style="color:rgba(245,240,232,0.6);">Hours:</strong><br />
+            Mon–Fri: 9am – 7pm<br />
+            Saturday: 9am – 5pm<br />
+            Sunday: Closed
+          </p>
+        </div>
+
+        <div class="col-lg-7 offset-lg-1">
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-control" id="fname" placeholder="John" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lname" placeholder="Smith" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="john@email.com" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Service</label>
+              <select class="form-select" id="service">
+                <option value="">Choose a service...</option>
+                <option>Classic Haircut — $35</option>
+                <option>Fade &amp; Taper — $40</option>
+                <option>Beard Trim — $25</option>
+                <option>Cut + Beard — $55</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Barber</label>
+              <select class="form-select" id="barber">
+                <option value="">Any available</option>
+                <option>Marcus</option>
+                <option>Darius</option>
+                <option>James</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Date</label>
+              <input type="date" class="form-control" id="date" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Time</label>
+              <select class="form-select" id="time">
+                <option value="">Pick a time...</option>
+                <option>9:00 AM</option>
+                <option>10:00 AM</option>
+                <option>11:00 AM</option>
+                <option>12:00 PM</option>
+                <option>1:00 PM</option>
+                <option>2:00 PM</option>
+                <option>3:00 PM</option>
+                <option>4:00 PM</option>
+                <option>5:00 PM</option>
+                <option>6:00 PM</option>
+              </select>
+            </div>
+
+            <div class="col-12 mt-2">
+              <button onclick="submitBooking()" class="btn-book w-100 py-3">Confirm Booking</button>
+            </div>
+
+            <div id="confirmBox" class="col-12">
+              <i class="bi bi-check-circle me-2" style="color:#1a6b3a;"></i>
+              <span id="confirmMsg" style="color:#f5f0e8;"></span>
+            </div>
+
+            <div id="errorBox" class="col-12">
+              <i class="bi bi-exclamation-circle me-2" style="color:#dc3545;"></i>
+              Please fill in all the fields first.
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="row g-5">
+
+        <div class="col-lg-6">
+          <h2 class="section-title">About <span>Us</span></h2>
+          <p style="margin-bottom:12px;">PrestigeCuts has been on Sparks Street since 2018. We're three barbers who care about what we do — Marcus, Darius, and James. No huge chain, no assembly line, just us and our regulars.</p>
+          <p style="color:#555; font-size:0.92rem;">We do a quick consultation before every cut. You know what you want? Great. Not sure? We'll figure it out together. Either way, you're leaving with something you actually like.</p>
+        </div>
+
+        <div class="col-lg-5 offset-lg-1">
+          <div class="row g-2">
+            <div class="col-6">
+              <div class="stat-box">
+                <div class="num">7+</div>
+                <div class="lbl">Years Open</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="stat-box">
+                <div class="num">3</div>
+                <div class="lbl">Barbers</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="stat-box">
+                <div class="num">4</div>
+                <div class="lbl">Services</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="stat-box">
+                <div class="num">4.9★</div>
+                <div class="lbl">Google Rating</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" style="background-color:#f5f0e8;">
+    <div class="container">
+      <div class="row g-5">
+
+        <div class="col-lg-5">
+          <h2 class="section-title">Find <span>Us</span></h2>
+          <div class="mt-4">
+            <div class="contact-row">
+              <i class="bi bi-geo-alt-fill"></i>
+              <div>
+                <h6>Address</h6>
+                <p>145 Sparks Street, Ottawa, ON K1P 5B9</p>
+              </div>
+            </div>
+            <div class="contact-row">
+              <i class="bi bi-telephone-fill"></i>
+              <div>
+                <h6>Phone</h6>
+                <p>(613) 555-0192</p>
+              </div>
+            </div>
+            <div class="contact-row">
+              <i class="bi bi-envelope-fill"></i>
+              <div>
+                <h6>Email</h6>
+                <p>hello@prestigecuts.ca</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 offset-lg-1">
+          <h5 style="font-family:'Poppins',sans-serif; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em; color:#999; margin-bottom:12px;">Hours</h5>
+          <table class="hours">
+            <tr><td>Monday – Friday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr><td>Saturday</td><td>9:00 AM – 5:00 PM</td></tr>
+            <tr><td>Sunday</td><td style="color:#dc3545 !important;">Closed</td></tr>
+          </table>
+
+          <div class="mt-4" style="background:#ede7d6; border:1px solid #ddd; height:160px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px;">
+            <i class="bi bi-map" style="font-size:1.8rem; color:#1a6b3a;"></i>
+            <p style="font-size:0.8rem; color:#999; margin:0;">145 Sparks Street, Ottawa</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <h5>Prestige<span>cuts</span></h5>
+          <p style="font-size:0.8rem; color:rgba(245,240,232,0.3); text-transform:uppercase; letter-spacing:0.06em;">Ottawa Barbershop · Est. 2018</p>
+        </div>
+        <div class="col-lg-5 offset-lg-2 mt-3 mt-lg-0">
+          <p style="font-size:0.85rem; color:rgba(245,240,232,0.4);">Walk-ins welcome. Book online to hold your spot with a specific barber.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 PrestigeCuts Barbershop, Ottawa ON</span>
+        <span>Designed by Majd Al Khori · SEG3125, University of Ottawa</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    function submitBooking() {
+      var fname   = document.getElementById('fname').value.trim();
+      var lname   = document.getElementById('lname').value.trim();
+      var email   = document.getElementById('email').value.trim();
+      var service = document.getElementById('service').value;
+      var date    = document.getElementById('date').value;
+      var time    = document.getElementById('time').value;
+
+      var confirmBox = document.getElementById('confirmBox');
+      var errorBox   = document.getElementById('errorBox');
+
+      if (fname == '' || lname == '' || email == '' || service == '' || date == '' || time == '') {
+        errorBox.style.display = 'block';
+        confirmBox.style.display = 'none';
+        return;
+      }
+
+      errorBox.style.display = 'none';
+      confirmBox.style.display = 'block';
+      document.getElementById('confirmMsg').innerText =
+        'Booked! ' + fname + ' ' + lname + ' — ' + service + ' on ' + date + ' at ' + time + '.';
+    }
+
+    // simple scroll reveal
+    window.addEventListener('scroll', function() {
+      var cards = document.querySelectorAll('.service-card, .stat-box');
+      for (var i = 0; i < cards.length; i++) {
+        var top = cards[i].getBoundingClientRect().top;
+        if (top < window.innerHeight - 50) {
+          cards[i].style.opacity = '1';
+        }
+      }
+    });
+
+    // set cards slightly transparent at start
+    var cards = document.querySelectorAll('.service-card, .stat-box');
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].style.opacity = '0.15';
+      cards[i].style.transition = 'opacity 0.5s ease';
+    }
+
+    window.dispatchEvent(new Event('scroll'));
+  </script>
+
+</body>
+</html>
