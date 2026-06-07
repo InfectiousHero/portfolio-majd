@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storyboard 2 — Robert</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: #1a1a1a;
+    }
+
+    .page-header {
+      background-color: #f5f0e8;
+      border-bottom: 3px solid #1a6b3a;
+      padding: 40px 0 30px;
+      margin-bottom: 50px;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    .page-header h1 span { color: #1a6b3a; }
+
+    .page-header p {
+      color: #888;
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    .back-link {
+      color: #888;
+      font-size: 0.8rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .back-link:hover { color: #1a6b3a; }
+
+    /* Persona card — light theme */
+    .persona-card {
+      background-color: #f5f0e8;
+      border-left: 4px solid #1a6b3a;
+      padding: 28px;
+      margin-bottom: 50px;
+    }
+
+    .persona-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .persona-card h3 span { color: #1a6b3a; }
+
+    .persona-card .role {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #999;
+      margin-bottom: 20px;
+    }
+
+    .persona-tag {
+      display: inline-block;
+      border: 1px solid #ccc;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      color: #666;
+      margin: 3px;
+    }
+
+    .persona-goal {
+      background-color: #fff;
+      border-left: 3px solid #1a6b3a;
+      padding: 12px 16px;
+      margin-top: 20px;
+      font-size: 0.88rem;
+      color: #444;
+    }
+
+    /* Step styles */
+    .step-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #bbb;
+      margin-bottom: 8px;
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ddd;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1a1a1a;
+    }
+
+    .step-desc {
+      font-size: 0.82rem;
+      color: #777;
+      margin-bottom: 16px;
+    }
+
+    /* Mockup frames — light theme */
+    .mockup-frame {
+      border: 2px solid #ddd;
+      background-color: #fff;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .mockup-bar {
+      background-color: #f0f0f0;
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .mockup-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    .mockup-url {
+      font-size: 0.65rem;
+      color: #aaa;
+      margin-left: 8px;
+    }
+
+    /* Mini navbar — light */
+    .m-nav {
+      background-color: #fff;
+      padding: 8px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    .m-nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      color: #1a1a1a;
+    }
+
+    .m-nav-brand span { color: #1a6b3a; }
+
+    .m-nav-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .m-nav-links a {
+      font-size: 0.6rem;
+      color: #888;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    /* Mini hero — light */
+    .m-hero {
+      background-color: #f5f0e8;
+      padding: 18px 14px;
+    }
+
+    .m-hero-label {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #999;
+      margin-bottom: 5px;
+    }
+
+    .m-hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+      line-height: 1.2;
+    }
+
+    .m-hero h2 em { color: #1a6b3a; font-style: italic; }
+
+    .m-hero p {
+      font-size: 0.58rem;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .m-btn-green {
+      background-color: #1a6b3a;
+      color: #fff;
+      font-size: 0.58rem;
+      padding: 5px 12px;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: none;
+      display: inline-block;
+    }
+
+    /* Mini services — light */
+    .m-services {
+      background-color: #fff;
+      padding: 12px 14px;
+    }
+
+    .m-services-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .m-service-row {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 5px;
+    }
+
+    .m-service-item {
+      flex: 1;
+      background-color: #f5f0e8;
+      border-left: 2px solid #1a6b3a;
+      padding: 5px 7px;
+    }
+
+    .m-service-item .name {
+      font-size: 0.56rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .m-service-item .price {
+      font-size: 0.58rem;
+      color: #1a6b3a;
+      font-weight: 600;
+    }
+
+    /* Mini contact — light */
+    .m-contact {
+      background-color: #fff;
+      padding: 12px 14px;
+    }
+
+    .m-contact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+
+    .m-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+
+    .m-contact-item i {
+      font-size: 0.65rem;
+      color: #1a6b3a;
+      margin-top: 1px;
+    }
+
+    .m-contact-item .info {
+      font-size: 0.58rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .m-contact-item .lbl {
+      font-size: 0.52rem;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 1px;
+    }
+
+    /* Hours table mini */
+    .m-hours {
+      background-color: #f5f0e8;
+      padding: 10px 14px;
+    }
+
+    .m-hours table {
+      width: 100%;
+      font-size: 0.58rem;
+      color: #555;
+    }
+
+    .m-hours table td {
+      padding: 3px 0;
+      border-bottom: 1px solid #e0dbd0;
+    }
+
+    .m-hours table td:last-child {
+      text-align: right;
+      color: #1a6b3a;
+      font-weight: 600;
+    }
+
+    /* Footer page */
+    .page-footer {
+      background-color: #f5f0e8;
+      border-top: 1px solid #ddd;
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      margin-top: 60px;
+    }
+
+    .page-footer a {
+      color: #1a6b3a;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="container">
+      <a href="../index.html" class="back-link"><i class="bi bi-arrow-left me-1"></i> Back to Portfolio</a>
+      <h1>Storyboard <span>2</span></h1>
+      <p>PrestigeCuts Barbershop · Light Theme · SEG3125 Assignment 2 · Majd Al Khori — 300240467</p>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Persona -->
+    <div class="persona-card">
+      <div class="row align-items-start">
+        <div class="col-lg-7">
+          <h3>Persona: <span>Robert</span></h3>
+          <div class="role">Accountant, 54 — Ottawa</div>
+          <div>
+            <span class="persona-tag">Not very tech-savvy</span>
+            <span class="persona-tag">Prefers calling ahead</span>
+            <span class="persona-tag">Values clear information</span>
+            <span class="persona-tag">Long-time barbershop client</span>
+          </div>
+          <div class="persona-goal">
+            <strong style="color:#1a6b3a;">Goal:</strong> Robert wants to find out where the barbershop is located, what the opening hours are, and how much a basic haircut costs — so he can decide whether to stop by after work on Friday.
+          </div>
+        </div>
+        <div class="col-lg-4 offset-lg-1 mt-4 mt-lg-0">
+          <p style="font-size:0.82rem; color:#999; margin-bottom:6px;">Relation to technology</p>
+          <p style="font-size:0.85rem; color:#555; margin-bottom:16px;">Uses his phone mostly for calls and email. He can browse websites but gets frustrated if things are hard to find or too cluttered. Prefers simple, clear layouts.</p>
+          <p style="font-size:0.82rem; color:#999; margin-bottom:6px;">Relation to barbershops</p>
+          <p style="font-size:0.85rem; color:#555; margin:0;">Has been going to barbershops his whole life. Not interested in booking apps — he'd rather call. But he'll look up a new place online before committing.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="row g-4 align-items-start">
+
+      <!-- Step 1 -->
+      <div class="col-lg-4">
+        <div class="step-label">Step</div>
+        <div class="step-num">01</div>
+        <div class="step-title">Robert finds the site</div>
+        <div class="step-desc">He Googles "barbershop Ottawa Sparks Street" and lands on the homepage. He scrolls slowly, reading everything.</div>
+
+        <div class="mockup-frame">
+          <div class="mockup-bar">
+            <div class="mockup-dot" style="background:#ff5f57;"></div>
+            <div class="mockup-dot" style="background:#febc2e;"></div>
+            <div class="mockup-dot" style="background:#28c840;"></div>
+            <span class="mockup-url">prestigecuts.ca</span>
+          </div>
+          <div class="m-nav">
+            <div class="m-nav-brand">Prestige<span>cuts</span></div>
+            <div class="m-nav-links">
+              <a href="#">Services</a>
+              <a href="#">Book</a>
+              <a href="#">Contact</a>
+            </div>
+          </div>
+          <div class="m-hero">
+            <div class="m-hero-label">Ottawa's Local Barbershop</div>
+            <h2>Look Good,<br /><em>Feel Better.</em></h2>
+            <p>Small barbershop on Sparks Street. Good cuts, fair prices. Walk in or book ahead.</p>
+            <span class="m-btn-green">Book a Cut</span>
+          </div>
+          <div class="m-services" style="padding:8px 14px;">
+            <div style="font-size:0.6rem; color:#bbb;">↓ Scrolling down...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 d-none d-lg-flex align-items-center justify-content-center" style="padding-top:160px;">
+        <i class="bi bi-arrow-right" style="font-size:1.8rem; color:#1a6b3a;"></i>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="col-lg-4">
+        <div class="step-label">Step</div>
+        <div class="step-num">02</div>
+        <div class="step-title">He checks the services and prices</div>
+        <div class="step-desc">He scrolls to the services section. He sees the Classic Haircut is $35. That's reasonable to him — he makes a note.</div>
+
+        <div class="mockup-frame">
+          <div class="mockup-bar">
+            <div class="mockup-dot" style="background:#ff5f57;"></div>
+            <div class="mockup-dot" style="background:#febc2e;"></div>
+            <div class="mockup-dot" style="background:#28c840;"></div>
+            <span class="mockup-url">prestigecuts.ca/#services</span>
+          </div>
+          <div class="m-nav">
+            <div class="m-nav-brand">Prestige<span>cuts</span></div>
+          </div>
+          <div class="m-services">
+            <div class="m-services-title">Our Services</div>
+            <div class="m-service-row">
+              <div class="m-service-item">
+                <div class="name">Classic Haircut</div>
+                <div class="price">$35</div>
+              </div>
+              <div class="m-service-item">
+                <div class="name">Fade & Taper</div>
+                <div class="price">$40</div>
+              </div>
+            </div>
+            <div class="m-service-row">
+              <div class="m-service-item">
+                <div class="name">Beard Trim</div>
+                <div class="price">$25</div>
+              </div>
+              <div class="m-service-item">
+                <div class="name">Cut + Beard</div>
+                <div class="price">$55</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:#f5f0e8; padding:8px 14px;">
+            <div style="font-size:0.6rem; color:#bbb;">↓ Scrolling to contact...</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Step 3 -->
+    <div class="row g-4 mt-2">
+      <div class="col-12 text-center mb-2">
+        <i class="bi bi-arrow-down" style="font-size:1.5rem; color:#1a6b3a;"></i>
+      </div>
+      <div class="col-lg-4 offset-lg-4">
+        <div class="step-label">Step</div>
+        <div class="step-num">03</div>
+        <div class="step-title">He finds the address and hours</div>
+        <div class="step-desc">He scrolls to the Contact section and finds everything he needed — address, phone number, and that they're open until 7pm on Fridays. He decides to walk in after work.</div>
+
+        <div class="mockup-frame">
+          <div class="mockup-bar">
+            <div class="mockup-dot" style="background:#ff5f57;"></div>
+            <div class="mockup-dot" style="background:#febc2e;"></div>
+            <div class="mockup-dot" style="background:#28c840;"></div>
+            <span class="mockup-url">prestigecuts.ca/#contact</span>
+          </div>
+          <div class="m-nav">
+            <div class="m-nav-brand">Prestige<span>cuts</span></div>
+          </div>
+          <div class="m-contact">
+            <div class="m-contact-title">Find Us</div>
+            <div class="m-contact-item">
+              <i class="bi bi-geo-alt-fill"></i>
+              <div>
+                <div class="lbl">Address</div>
+                <div class="info">145 Sparks Street, Ottawa, ON</div>
+              </div>
+            </div>
+            <div class="m-contact-item">
+              <i class="bi bi-telephone-fill"></i>
+              <div>
+                <div class="lbl">Phone</div>
+                <div class="info">(613) 555-0192</div>
+              </div>
+            </div>
+          </div>
+          <div class="m-hours">
+            <table>
+              <tr><td>Mon – Fri</td><td>9:00 AM – 7:00 PM</td></tr>
+              <tr><td>Saturday</td><td>9:00 AM – 5:00 PM</td></tr>
+              <tr><td>Sunday</td><td style="color:#dc3545 !important;">Closed</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav to other storyboard -->
+    <div class="mt-5 pt-3" style="border-top: 1px solid #ddd;">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; color:#bbb; margin-bottom:4px;">Also see</p>
+          <a href="storyboard1.html" style="color:#1a1a1a; font-weight:600; font-size:0.95rem;"><i class="bi bi-arrow-left me-1"></i> Storyboard 1 — Karim (Dark Theme)</a>
+        </div>
+        <a href="https://prestigecuts-barbershop.netlify.app" target="_blank" style="color:#1a6b3a; font-size:0.88rem;">View Live Site <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span>SEG3125 Assignment 2 · Majd Al Khori · 300240467 · University of Ottawa</span><br />
+    <a href="../index.html">Portfolio</a>
+    <a href="storyboard1.html">Storyboard 1</a>
+    <a href="https://prestigecuts-barbershop.netlify.app" target="_blank">Live Site</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
