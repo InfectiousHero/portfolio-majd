@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Football Stats Dashboard / Tableau de Bord Football</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --green:#1a6b3a;--green-dark:#14532d;--green-light:#eaf2ec;
+  --gold:#c9a84c;--gold-light:#fdf7ea;
+  --cream:#f5f0e8;--cream-card:#ede7d6;
+  --ink:#1a1a1a;--muted:#6b6b6b;--border:#e3dcc9;
+  --chart1:#1a6b3a;--chart2:#c9a84c;--chart3:#0f3f6e;--chart4:#8b1a1a;--chart5:#555;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--ink);line-height:1.5;}
+
+/* ── NAV ── */
+.nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;gap:16px;}
+.nav-brand{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--ink);}
+.nav-brand span{color:var(--green);}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+.back-link{font-size:0.78rem;color:var(--muted);text-decoration:none;}
+.back-link:hover{color:var(--green);}
+.lang-toggle{display:flex;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;}
+.lang-btn{background:none;border:none;padding:5px 14px;font-size:0.78rem;font-weight:600;cursor:pointer;color:var(--muted);font-family:'Poppins',sans-serif;}
+.lang-btn.active{background:var(--green);color:#fff;}
+.synthetic-badge{background:var(--gold-light);border:1px solid var(--gold);color:#7a6020;font-size:0.7rem;padding:3px 10px;border-radius:12px;font-weight:600;}
+
+/* ── HERO ── */
+.hero{background:var(--ink);color:#fff;padding:36px 20px;}
+.hero-inner{max-width:1100px;margin:0 auto;}
+.hero-eyebrow{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--gold);font-weight:600;margin-bottom:8px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:2rem;line-height:1.2;margin-bottom:10px;}
+.hero h1 span{color:var(--gold);}
+.hero-sub{color:rgba(255,255,255,0.55);font-size:0.88rem;max-width:560px;line-height:1.7;}
+.hero-meta{margin-top:14px;font-size:0.75rem;color:rgba(255,255,255,0.3);}
+
+/* ── LAYOUT ── */
+.page{max-width:1100px;margin:0 auto;padding:32px 20px 60px;}
+.section-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.13em;color:var(--green);font-weight:600;margin-bottom:4px;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:6px;}
+.section-desc{color:var(--muted);font-size:0.86rem;line-height:1.6;margin-bottom:20px;max-width:640px;}
+.divider{border:none;border-top:1px solid var(--border);margin:36px 0;}
+
+/* ── CHART CARDS ── */
+.chart-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:28px;margin-bottom:28px;}
+.chart-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:20px;}
+.chart-title-block{}
+.chart-title{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:3px;}
+.chart-context{font-size:0.8rem;color:var(--muted);max-width:480px;line-height:1.5;}
+.chart-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.ctrl-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);font-weight:600;margin-right:4px;}
+.ctrl-select{border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:0.82rem;background:#fff;color:var(--ink);font-family:'Poppins',sans-serif;}
+.ctrl-select:focus{outline:none;border-color:var(--green);}
+.ctrl-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.player-toggle{border:1.5px solid var(--border);background:#fff;border-radius:4px;padding:5px 12px;font-size:0.78rem;cursor:pointer;font-family:'Poppins',sans-serif;color:var(--muted);}
+.player-toggle.on{color:#fff;border-color:transparent;}
+.chart-wrap{position:relative;width:100%;}
+canvas{width:100% !important;}
+
+/* ── STATS ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:28px;}
+.kpi-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+.kpi-val{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--green);line-height:1;}
+.kpi-lbl{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-top:4px;}
+
+/* ── FOOTER ── */
+.dash-footer{text-align:center;font-size:0.75rem;color:var(--muted);margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+
+@media(max-width:640px){
+  .chart-header{flex-direction:column;}
+  .hero h1{font-size:1.5rem;}
+  .kpi-row{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script type="text/babel" data-presets="react">
+const {useState, useEffect, useRef, useCallback} = React;
+
+/* ─── TRANSLATIONS ─── */
+const T = {
+  en: {
+    brand: "Pitch",
+    brandSuffix: "Stats",
+    backLink: "← Portfolio",
+    syntheticBadge: "Synthetic Data",
+    heroEyebrow: "SEG3125 — Assignment 5",
+    heroTitle: "Football Stats",
+    heroTitleSpan: "Dashboard",
+    heroSub: "Exploring performance statistics for five players across the 2020–2025 seasons. Use the controls below each chart to filter the data and compare results.",
+    heroMeta: "Data is AI-generated for academic purposes and does not reflect real player statistics.",
+    langLabel: "Language:",
+    sec1Label: "Overview",
+    sec1Title: "Season at a Glance",
+    kpi1: "Players Tracked",
+    kpi2: "Seasons Covered",
+    kpi3: "Total Goals (2024–25)",
+    kpi4: "Top Scorer",
+    sec2Label: "Chart 1 — Line Chart",
+    sec2Title: "Goals Per Season",
+    sec2Desc: "Track how each player's goal tally has changed over time. Select which players to show and adjust the season range to focus on a specific period.",
+    lineChartTitle: "Goals Per Season (2020–2025)",
+    lineChartContext: "Each line represents one player. Goal totals are for league appearances only.",
+    seasonFrom: "From:",
+    seasonTo: "To:",
+    showPlayers: "Players:",
+    sec3Label: "Chart 2 — Bar Chart",
+    sec3Title: "Season Stat Comparison",
+    sec3Desc: "Compare a selected statistic across all five players for a specific season. Switch between Goals, Assists, Shots on Target, and Key Passes using the dropdown.",
+    barChartTitle: "Player Comparison",
+    barChartContext: "Bars show each player's value for the selected stat and season.",
+    selectSeason: "Season:",
+    selectStat: "Stat:",
+    stats: {goals:"Goals", assists:"Assists", shotsOnTarget:"Shots on Target", keyPasses:"Key Passes"},
+    dashFooter: "Majd Al Khori · 300240467 · SEG3125, University of Ottawa · Summer 2026 · Data: AI-generated (synthetic)",
+  },
+  fr: {
+    brand: "Pitch",
+    brandSuffix: "Stats",
+    backLink: "← Portfolio",
+    syntheticBadge: "Données Synthétiques",
+    heroEyebrow: "SEG3125 — Devoir 5",
+    heroTitle: "Statistiques Football",
+    heroTitleSpan: "Tableau de Bord",
+    heroSub: "Exploration des statistiques de performance pour cinq joueurs sur les saisons 2020–2025. Utilisez les contrôles sous chaque graphique pour filtrer les données.",
+    heroMeta: "Les données sont générées par IA à des fins académiques et ne reflètent pas de vraies statistiques.",
+    langLabel: "Langue :",
+    sec1Label: "Aperçu",
+    sec1Title: "Saison en Bref",
+    kpi1: "Joueurs Suivis",
+    kpi2: "Saisons Couvertes",
+    kpi3: "Buts Totaux (2024–25)",
+    kpi4: "Meilleur Buteur",
+    sec2Label: "Graphique 1 — Courbe",
+    sec2Title: "Buts Par Saison",
+    sec2Desc: "Suivez l'évolution du nombre de buts de chaque joueur. Sélectionnez les joueurs à afficher et ajustez la plage de saisons.",
+    lineChartTitle: "Buts Par Saison (2020–2025)",
+    lineChartContext: "Chaque ligne représente un joueur. Les totaux de buts concernent les apparitions en championnat uniquement.",
+    seasonFrom: "De :",
+    seasonTo: "À :",
+    showPlayers: "Joueurs :",
+    sec3Label: "Graphique 2 — Barres",
+    sec3Title: "Comparaison de Statistiques",
+    sec3Desc: "Comparez une statistique sélectionnée pour les cinq joueurs sur une saison donnée.",
+    barChartTitle: "Comparaison des Joueurs",
+    barChartContext: "Les barres montrent la valeur de chaque joueur pour la statistique et la saison choisies.",
+    selectSeason: "Saison :",
+    selectStat: "Statistique :",
+    stats: {goals:"Buts", assists:"Passes décisives", shotsOnTarget:"Tirs cadrés", keyPasses:"Passes clés"},
+    dashFooter: "Majd Al Khori · 300240467 · SEG3125, Université d'Ottawa · Été 2026 · Données : générées par IA (synthétiques)",
+  }
+};
+
+/* ─── DATA ─── */
+const PLAYERS = ["Ronaldo","Mbappé","Salah","Haaland","Benzema"];
+const SEASONS = ["2020–21","2021–22","2022–23","2023–24","2024–25"];
+const COLORS  = ["#1a6b3a","#c9a84c","#0f3f6e","#8b1a1a","#555555"];
+
+const DATA = {
+  goals: {
+    "Ronaldo":  [24,18,15,12,10],
+    "Mbappé":   [27,29,31,34,28],
+    "Salah":    [22,23,19,26,24],
+    "Haaland":  [20,29,36,27,32],
+    "Benzema":  [23,27,15,11, 9],
+  },
+  assists: {
+    "Ronaldo":  [3,4,2,3,2],
+    "Mbappé":   [16,17,13,12,15],
+    "Salah":    [10,11,14,12,13],
+    "Haaland":  [6,6,8,5,9],
+    "Benzema":  [9,10,4,3,2],
+  },
+  shotsOnTarget: {
+    "Ronaldo":  [72,62,54,45,38],
+    "Mbappé":   [89,94,102,110,97],
+    "Salah":    [76,80,70,88,82],
+    "Haaland":  [68,90,112,95,108],
+    "Benzema":  [74,88,55,40,30],
+  },
+  keyPasses: {
+    "Ronaldo":  [28,22,18,15,12],
+    "Mbappé":   [75,82,70,68,77],
+    "Salah":    [62,68,74,70,72],
+    "Haaland":  [24,28,34,30,36],
+    "Benzema":  [58,65,32,24,18],
+  },
+};
+
+function getTopScorer(seasonIdx) {
+  let best = "", bestVal = -1;
+  PLAYERS.forEach(p => {
+    const v = DATA.goals[p][seasonIdx];
+    if(v > bestVal){ bestVal = v; best = p; }
+  });
+  return best;
+}
+
+/* ─── LINE CHART ─── */
+function LineChart({lang, fromSeason, toSeason, activePlayers}) {
+  const canvasRef = useRef(null);
+  const chartRef  = useRef(null);
+  const t = T[lang];
+
+  useEffect(() => {
+    if(!canvasRef.current) return;
+    const fromIdx = SEASONS.indexOf(fromSeason);
+    const toIdx   = SEASONS.indexOf(toSeason);
+    const labels  = SEASONS.slice(fromIdx, toIdx+1);
+
+    const datasets = PLAYERS
+      .filter((_,i) => activePlayers[i])
+      .map((p,i) => ({
+        label: p,
+        data: DATA.goals[p].slice(fromIdx, toIdx+1),
+        borderColor: COLORS[PLAYERS.indexOf(p)],
+        backgroundColor: COLORS[PLAYERS.indexOf(p)]+'22',
+        borderWidth: 2.5,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        tension: 0.3,
+        fill: false,
+      }));
+
+    if(chartRef.current) { chartRef.current.destroy(); }
+
+    chartRef.current = new Chart(canvasRef.current, {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { font: { family: 'Poppins', size: 12 }, padding: 16, boxWidth: 14 }
+          },
+          title: {
+            display: true,
+            text: t.lineChartTitle,
+            font: { family: 'Playfair Display', size: 14 },
+            color: '#1a1a1a',
+            padding: { bottom: 10 }
+          },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          x: {
+            grid: { color: '#f0ebe0' },
+            ticks: { font: { family: 'Poppins', size: 11 }, color: '#6b6b6b' }
+          },
+          y: {
+            beginAtZero: true,
+            grid: { color: '#f0ebe0' },
+            ticks: { font: { family: 'Poppins', size: 11 }, color: '#6b6b6b', stepSize: 5 },
+            title: {
+              display: true,
+              text: t.stats.goals,
+              font: { family: 'Poppins', size: 11 },
+              color: '#6b6b6b'
+            }
+          }
+        }
+      }
+    });
+    return () => { if(chartRef.current){ chartRef.current.destroy(); chartRef.current = null; } };
+  }, [lang, fromSeason, toSeason, activePlayers]);
+
+  return <div className="chart-wrap"><canvas ref={canvasRef} height={280}></canvas></div>;
+}
+
+/* ─── BAR CHART ─── */
+function BarChart({lang, season, stat}) {
+  const canvasRef = useRef(null);
+  const chartRef  = useRef(null);
+  const t = T[lang];
+
+  useEffect(() => {
+    if(!canvasRef.current) return;
+    const seasonIdx = SEASONS.indexOf(season);
+    const values = PLAYERS.map(p => DATA[stat][p][seasonIdx]);
+    const maxVal = Math.max(...values);
+
+    const datasets = [{
+      label: t.stats[stat],
+      data: values,
+      backgroundColor: PLAYERS.map((_,i) => COLORS[i]+'cc'),
+      borderColor: PLAYERS.map((_,i) => COLORS[i]),
+      borderWidth: 1.5,
+      borderRadius: 4,
+    }];
+
+    if(chartRef.current){ chartRef.current.destroy(); }
+
+    chartRef.current = new Chart(canvasRef.current, {
+      type: 'bar',
+      data: { labels: PLAYERS, datasets },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: {
+            display: true,
+            text: `${t.stats[stat]} — ${season}`,
+            font: { family: 'Playfair Display', size: 14 },
+            color: '#1a1a1a',
+            padding: { bottom: 10 }
+          },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${t.stats[stat]}: ${ctx.raw}`
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { font: { family: 'Poppins', size: 12 }, color: '#1a1a1a' }
+          },
+          y: {
+            beginAtZero: true,
+            max: Math.ceil(maxVal * 1.15),
+            grid: { color: '#f0ebe0' },
+            ticks: { font: { family: 'Poppins', size: 11 }, color: '#6b6b6b', stepSize: Math.ceil(maxVal/6) },
+            title: {
+              display: true,
+              text: t.stats[stat],
+              font: { family: 'Poppins', size: 11 },
+              color: '#6b6b6b'
+            }
+          }
+        }
+      }
+    });
+    return () => { if(chartRef.current){ chartRef.current.destroy(); chartRef.current = null; } };
+  }, [lang, season, stat]);
+
+  return <div className="chart-wrap"><canvas ref={canvasRef} height={280}></canvas></div>;
+}
+
+/* ─── APP ─── */
+function App() {
+  const [lang, setLang] = useState('en');
+  const [fromSeason, setFrom] = useState(SEASONS[0]);
+  const [toSeason,   setTo]   = useState(SEASONS[4]);
+  const [activePlayers, setActive] = useState([true,true,true,true,true]);
+  const [barSeason, setBarSeason]  = useState(SEASONS[4]);
+  const [barStat,   setBarStat]    = useState('goals');
+
+  const t = T[lang];
+
+  function togglePlayer(i) {
+    setActive(prev => prev.map((v,idx) => idx===i ? !v : v));
+  }
+
+  const lastSeasonGoals = PLAYERS.reduce((s,p) => s + DATA.goals[p][4], 0);
+  const topScorer = getTopScorer(4);
+
+  const toOptions = SEASONS.filter(s => SEASONS.indexOf(s) > SEASONS.indexOf(fromSeason));
+  const fromOptions = SEASONS.filter(s => SEASONS.indexOf(s) < SEASONS.indexOf(toSeason));
+
+  return (
+    <>
+      {/* NAV */}
+      <nav className="nav">
+        <div className="nav-inner">
+          <span className="nav-brand">{t.brand}<span>{t.brandSuffix}</span></span>
+          <span className="synthetic-badge">{t.syntheticBadge}</span>
+          <div className="nav-right">
+            <a className="back-link" href="../index.html">{t.backLink}</a>
+            <div className="lang-toggle">
+              <button className={"lang-btn"+(lang==='en'?' active':'')} onClick={()=>setLang('en')}>EN</button>
+              <button className={"lang-btn"+(lang==='fr'?' active':'')} onClick={()=>setLang('fr')}>FR</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <div className="hero">
+        <div className="hero-inner">
+          <p className="hero-eyebrow">{t.heroEyebrow}</p>
+          <h1 className="hero-title">{t.heroTitle} — <span>{t.heroTitleSpan}</span></h1>
+          <p className="hero-sub">{t.heroSub}</p>
+          <p className="hero-meta">{t.heroMeta}</p>
+        </div>
+      </div>
+
+      <div className="page">
+
+        {/* KPI ROW */}
+        <p className="section-label">{t.sec1Label}</p>
+        <h2 className="section-title">{t.sec1Title}</h2>
+        <div className="kpi-row">
+          <div className="kpi-card"><div className="kpi-val">5</div><div className="kpi-lbl">{t.kpi1}</div></div>
+          <div className="kpi-card"><div className="kpi-val">5</div><div className="kpi-lbl">{t.kpi2}</div></div>
+          <div className="kpi-card"><div className="kpi-val">{lastSeasonGoals}</div><div className="kpi-lbl">{t.kpi3}</div></div>
+          <div className="kpi-card"><div className="kpi-val" style={{fontSize:'1.3rem'}}>{topScorer}</div><div className="kpi-lbl">{t.kpi4}</div></div>
+        </div>
+
+        <hr className="divider"/>
+
+        {/* CHART 1 — LINE */}
+        <p className="section-label">{t.sec2Label}</p>
+        <h2 className="section-title">{t.sec2Title}</h2>
+        <p className="section-desc">{t.sec2Desc}</p>
+
+        <div className="chart-card">
+          <div className="chart-header">
+            <div className="chart-title-block">
+              <div className="chart-title">{t.lineChartTitle}</div>
+              <div className="chart-context">{t.lineChartContext}</div>
+            </div>
+            <div className="chart-controls" style={{flexDirection:'column',alignItems:'flex-end',gap:'10px'}}>
+              <div className="ctrl-group">
+                <span className="ctrl-label">{t.seasonFrom}</span>
+                <select className="ctrl-select" value={fromSeason} onChange={e=>{ setFrom(e.target.value); if(SEASONS.indexOf(e.target.value)>=SEASONS.indexOf(toSeason)) setTo(SEASONS[SEASONS.indexOf(e.target.value)+1]||SEASONS[4]); }}>
+                  {SEASONS.slice(0,-1).map(s=><option key={s}>{s}</option>)}
+                </select>
+                <span className="ctrl-label">{t.seasonTo}</span>
+                <select className="ctrl-select" value={toSeason} onChange={e=>setTo(e.target.value)}>
+                  {SEASONS.slice(1).map(s=><option key={s}>{s}</option>)}
+                </select>
+              </div>
+              <div className="ctrl-group">
+                <span className="ctrl-label">{t.showPlayers}</span>
+                {PLAYERS.map((p,i)=>(
+                  <button key={p}
+                    className={"player-toggle"+(activePlayers[i]?' on':'')}
+                    style={activePlayers[i]?{backgroundColor:COLORS[i]}:{}}
+                    onClick={()=>togglePlayer(i)}
+                  >{p}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <LineChart lang={lang} fromSeason={fromSeason} toSeason={toSeason} activePlayers={activePlayers}/>
+        </div>
+
+        <hr className="divider"/>
+
+        {/* CHART 2 — BAR */}
+        <p className="section-label">{t.sec3Label}</p>
+        <h2 className="section-title">{t.sec3Title}</h2>
+        <p className="section-desc">{t.sec3Desc}</p>
+
+        <div className="chart-card">
+          <div className="chart-header">
+            <div className="chart-title-block">
+              <div className="chart-title">{t.barChartTitle}</div>
+              <div className="chart-context">{t.barChartContext}</div>
+            </div>
+            <div className="chart-controls">
+              <div className="ctrl-group">
+                <span className="ctrl-label">{t.selectSeason}</span>
+                <select className="ctrl-select" value={barSeason} onChange={e=>setBarSeason(e.target.value)}>
+                  {SEASONS.map(s=><option key={s}>{s}</option>)}
+                </select>
+              </div>
+              <div className="ctrl-group">
+                <span className="ctrl-label">{t.selectStat}</span>
+                <select className="ctrl-select" value={barStat} onChange={e=>setBarStat(e.target.value)}>
+                  {Object.keys(t.stats).map(k=><option key={k} value={k}>{t.stats[k]}</option>)}
+                </select>
+              </div>
+            </div>
+          </div>
+          <BarChart lang={lang} season={barSeason} stat={barStat}/>
+        </div>
+
+        <p className="dash-footer">{t.dashFooter}</p>
+      </div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
